@@ -26,11 +26,14 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{$role->name}}
                                 </th>
-                                <td class="px-6 py-4 text-right">
+                                <td class=" px-6 py-4 text-right">
                                     <a href="{{ route('admin.roles.edit', $role->id) }}"
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                    <a href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                                        <form class="font-medium text-blue-600 dark:text-blue-500 hover:underline" method="POST" action="{{ route('admin.roles.destroy', $role->id) }}" onsubmit="return confirm('Are you sure ?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

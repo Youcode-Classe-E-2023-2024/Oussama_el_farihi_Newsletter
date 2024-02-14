@@ -21,7 +21,11 @@
                                 </th>
                                 <td class="px-6 py-4 text-right">
                                     <a href="{{ route('admin.permissions.edit', $permission->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                    <a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                                    <form class="font-medium text-blue-600 dark:text-blue-500 hover:underline" method="POST" action="{{ route('admin.permissions.destroy', $permission->id) }}" onsubmit="return confirm('Are you sure ?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

@@ -10,9 +10,20 @@
                     </div>
                 </form>
                 <div class="grid grid-cols-3 gap-4">
-                    @foreach ($mediaItems as $media)
+                @foreach ($mediaItems as $media)
                         <div class="relative">
-                            <img src="{{ asset('storage/' . $media->id . '/' . $media->file_name) }}" alt="Media" class="w-full h-auto rounded-md">
+                            @if(in_array($media->mime_type, ['image/jpeg', 'image/png', 'image/gif']))
+                                <img src="{{ asset('storage/' . $media->id . '/' . $media->file_name) }}" alt="Media" class="w-full h-auto rounded-md">
+                            @elseif($media->mime_type === 'application/pdf')
+                                <a href="{{ asset('storage/' . $media->id . '/' . $media->file_name) }}" target="_blank" class="block p-4 bg-gray-100 rounded-md">View PDF</a>
+                            @elseif(in_array($media->mime_type, ['video/mp4', 'video/mpeg']))
+                                <video controls class="w-full h-auto rounded-md">
+                                    <source src="{{ asset('storage/' . $media->id . '/' . $media->file_name) }}" type="{{ $media->mime_type }}">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @else
+                                <a href="{{ asset('storage/' . $media->id . '/' . $media->file_name) }}" target="_blank" class="block p-4 bg-gray-100 rounded-md">View File</a>
+                            @endif
                             <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 rounded-b-md">
                                 <p class="text-sm text-white truncate">{{ $media->name }}</p>
                             </div>

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Editor\IndexControllerE;
+use App\Http\Controllers\Editor\MediaController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserController;
@@ -49,7 +50,7 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
 
 Route::middleware(['auth', 'role:editor'])->name('editor.')->prefix('editor')->group(function () {
     Route::get('/', [IndexControllerE::class, 'index'])->name('index');
-
+    Route::match(['get', 'post'], '/media', [MediaController::class, 'media'])->name('media');
 });
 
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Editor\TemplateController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Admin\IndexController;
@@ -51,6 +52,10 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
 Route::middleware(['auth', 'role:editor'])->name('editor.')->prefix('editor')->group(function () {
     Route::get('/', [IndexControllerE::class, 'index'])->name('index');
     Route::match(['get', 'post'], '/media', [MediaController::class, 'media'])->name('media');
+    Route::get('/template', [TemplateController::class, 'index'])->name('template.index');
+    Route::get('/email', [TemplateController::class, 'index'])->name('email.index');
+
+    
 });
 
 

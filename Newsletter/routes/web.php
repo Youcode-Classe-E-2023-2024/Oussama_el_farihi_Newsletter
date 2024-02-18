@@ -55,11 +55,8 @@ Route::middleware(['auth', 'role:editor'])->name('editor.')->prefix('editor')->g
     Route::match(['get', 'post'], '/media', [MediaController::class, 'media'])->name('media');
     Route::get('/template', [TemplateController::class, 'index'])->name('template.index');
     Route::get('/email', [EmailController::class, 'index'])->name('email.index');
-    // Route::get('/template', [TemplateController::class, 'index'])->name('template.index');
     Route::post('/template', [TemplateController::class, 'store'])->name('template.store');
-
-
-    
+    Route::post('/editor/send-email', [EmailController::class, 'send'])->name('email.send');
 });
 
 

@@ -1,40 +1,32 @@
 <x-editor-layout>
-    <div class="container mx-auto px-4">
-        <h1 class="text-xl font-bold mb-4">Newsletter Subscribers</h1>
-        <form action="" method="POST">
-            @csrf
-            <div class="bg-white shadow-md rounded my-6">
-                <table class="min-w-full table-auto">
-                    <thead class="justify-between">
-                        <tr class="bg-gray-800">
-                            <th class="px-4 py-2 text-left text-gray-300"><input type="checkbox" id="select-all"></th>
-                            <th class="px-4 py-2 text-left text-gray-300">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-gray-200">
-                        @forelse ($subscribers as $subscriber)
-                            <tr class="bg-white border-4 border-gray-200">
-                                <td class="px-4 py-2 text-left"><input type="checkbox" name="emails[]" value="{{ $subscriber->email }}"></td>
-                                <td class="px-4 py-2 text-left">{{ $subscriber->email }}</td>
-                            </tr>
-                        @empty
-                            <tr class="bg-white">
-                                <td class="px-4 py-2 text-left" colspan="2">No subscribers found.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                <form method="POST" action="">
+                    @csrf
+                    <div>
+                        <label for="template" class="block text-sm font-medium text-gray-700">Select Template:</label>
+                        <select id="template" name="template_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            @foreach ($templates as $template)
+                                <option value="{{ $template->id }}">{{ $template->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mt-4">
+                        <label for="subscribers" class="block text-sm font-medium text-gray-700">Select Subscribers:</label>
+                        <select id="subscribers" name="subscribers[]" multiple class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            @foreach ($subscribers as $subscriber)
+                                <option value="{{ $subscriber->id }}">{{ $subscriber->email }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Send Email
+                        </button>
+                    </div>
+                </form>
             </div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-blue-700">Send Email</button>
-        </form>
+        </div>
     </div>
-
-    <script>
-        document.getElementById('select-all').onclick = function() {
-            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            for (var checkbox of checkboxes) {
-                checkbox.checked = this.checked;
-            }
-        }
-    </script>
 </x-editor-layout>

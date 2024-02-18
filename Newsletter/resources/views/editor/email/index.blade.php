@@ -1,43 +1,40 @@
 <x-editor-layout>
-    <!-- component -->
-<div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <form method="POST" action="action.php">
-                        <div class="mb-4">
-                            <label class="text-xl text-gray-600">Title <span class="text-red-500">*</span></label></br>
-                            <input type="text" class="border-2 border-gray-300 p-2 w-full" name="title" id="title" value="" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="text-xl text-gray-600">Description</label></br>
-                            <input type="text" class="border-2 border-gray-300 p-2 w-full" name="description" id="description" placeholder="(Optional)">
-                        </div>
-
-                        <div class="mb-8">
-                            <label class="text-xl text-gray-600">Content <span class="text-red-500">*</span></label></br>
-                            <textarea name="content" class="border-2 border-gray-500">
-                                
-                            </textarea>
-                        </div>
-
-                        <div class="flex p-1">
-                            <select class="border-2 border-gray-300 border-r p-2" name="action">
-                                <option>Save and Publish</option>
-                                <option>Save Draft</option>
-                            </select>
-                            <button role="submit" class="p-3 bg-blue-500 text-white hover:bg-blue-400" required>Submit</button>
-                        </div>
-                    </form>
-                </div>
+    <div class="container mx-auto px-4">
+        <h1 class="text-xl font-bold mb-4">Newsletter Subscribers</h1>
+        <form action="" method="POST">
+            @csrf
+            <div class="bg-white shadow-md rounded my-6">
+                <table class="min-w-full table-auto">
+                    <thead class="justify-between">
+                        <tr class="bg-gray-800">
+                            <th class="px-4 py-2 text-left text-gray-300"><input type="checkbox" id="select-all"></th>
+                            <th class="px-4 py-2 text-left text-gray-300">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-gray-200">
+                        @forelse ($subscribers as $subscriber)
+                            <tr class="bg-white border-4 border-gray-200">
+                                <td class="px-4 py-2 text-left"><input type="checkbox" name="emails[]" value="{{ $subscriber->email }}"></td>
+                                <td class="px-4 py-2 text-left">{{ $subscriber->email }}</td>
+                            </tr>
+                        @empty
+                            <tr class="bg-white">
+                                <td class="px-4 py-2 text-left" colspan="2">No subscribers found.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-        </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-blue-700">Send Email</button>
+        </form>
     </div>
 
-    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
-
     <script>
-        CKEDITOR.replace( 'content' );
+        document.getElementById('select-all').onclick = function() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            for (var checkbox of checkboxes) {
+                checkbox.checked = this.checked;
+            }
+        }
     </script>
 </x-editor-layout>

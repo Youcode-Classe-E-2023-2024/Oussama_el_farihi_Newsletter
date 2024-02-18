@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Editor\IndexControllerE;
+use App\Http\Controllers\Editor\EmailController;
 use App\Http\Controllers\Editor\MediaController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -53,7 +54,10 @@ Route::middleware(['auth', 'role:editor'])->name('editor.')->prefix('editor')->g
     Route::get('/', [IndexControllerE::class, 'index'])->name('index');
     Route::match(['get', 'post'], '/media', [MediaController::class, 'media'])->name('media');
     Route::get('/template', [TemplateController::class, 'index'])->name('template.index');
-    Route::get('/email', [TemplateController::class, 'index'])->name('email.index');
+    Route::get('/email', [EmailController::class, 'index'])->name('email.index');
+    // Route::get('/template', [TemplateController::class, 'index'])->name('template.index');
+    Route::post('/template', [TemplateController::class, 'store'])->name('template.store');
+
 
     
 });
